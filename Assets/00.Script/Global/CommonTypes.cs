@@ -17,4 +17,5 @@ public struct CardData
     public int Attack { get; set; }
     public int HP { get; set; }
     public int Option { get; set; }
+    public string IllustPath { get; set; }
 }

@@ -6,28 +6,43 @@ using TMPro;
 public class CardBase : MonoBehaviour
 {
     public int CardID;
+    [HideInInspector]
     public int CardCost;
-    public int CardAttack;
-    public int CardHealth;
+    [HideInInspector]
+    public int CardAttack { get { return CardBaseAtk + CardAddAtk; } }
+    [HideInInspector]
+    private int CardBaseAtk;
+    private int CardAddAtk;
+    private int CardInitHP;
+    [HideInInspector]
+    public int CardCurHP;
+    [HideInInspector]
     public CardOption CardOption;
 
-    private TextMeshProUGUI cardName;
+    [SerializeField]
+    private TextMeshPro cardName;
+    [SerializeField]
+    private TextMeshPro cardAtk;
+    [SerializeField]
+    private TextMeshPro cardHp;
 
-    public void Awake()
+    private void Init()
     {
-        if(cardName == null)
-        {
-            cardName = GetComponent<TextMeshProUGUI>();
-        }
+        CardCurHP = CardInitHP;
+        CardAddAtk = 0;
     }
 
     public void SetCard(int id)
-    {
+    {        
         CardID = id;
-        CardCost = 1;
-        CardAttack = 1;
-        CardHealth = 1;
-        CardOption = CardOption.None;
-        cardName.text = "Card " + id;
+        var data = DataTableMgr.GetTable<CardTable>().dic[id];
+        CardCost = data.Cost;
+        CardBaseAtk = data.Attack;
+        CardInitHP = data.HP;
+        CardOption = (CardOption)data.Option;
+        Init();
+        cardName.text = data.Name;
+        cardAtk.text = CardAttack.ToString();
+        cardHp.text = CardCurHP.ToString();
     }
 }
