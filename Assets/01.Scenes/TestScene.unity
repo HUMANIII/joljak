@@ -123,6 +123,86 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &73678065
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6274419662633307866, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+      propertyPath: m_Name
+      value: CardPrefab (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7307333749818379133, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 7307333749818379133, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7307333749818379133, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7307333749818379133, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7307333749818379133, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7307333749818379133, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7307333749818379133, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7307333749818379133, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7307333749818379133, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7307333749818379133, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3794771297672944525, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 2018153185717448010, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 3523171739784638245, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 7580676781664797350, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+  m_SourcePrefab: {fileID: 100100000, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+--- !u!114 &73678066 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5373493014454808417, guid: 0d7e37b79b97b434797c28ef0a3cb0fc, type: 3}
+  m_PrefabInstance: {fileID: 73678065}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32e2ec13860bbb34dbb8734cf7467eb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &233537110
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,7 +260,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: test
+  m_text: testScene
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -393,6 +473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardList:
   - {fileID: 430110778}
+  - {fileID: 73678066}
 --- !u!4 &738255056
 Transform:
   m_ObjectHideFlags: 0
@@ -749,3 +830,4 @@ SceneRoots:
   - {fileID: 1814321813}
   - {fileID: 738255056}
   - {fileID: 6355982028672739195}
+  - {fileID: 73678065}

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class DataTable
 {
-    protected string filePath = string.Empty;
+    protected string filePath = "DataTables/";
 
     public abstract void Load();
 

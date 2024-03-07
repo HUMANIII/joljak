@@ -6,16 +6,20 @@ using System.Globalization;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Text;
 
 public class CardTable : DataTable
 {
-    private readonly string path = "DataTables/CardTable";
+    private readonly string path = "CardTable";
 
     public Dictionary<int, CardData> dic = new();
 
     public CardTable()
     {
-        filePath = path;
+        StringBuilder sb = new();
+        sb.Append(filePath);
+        sb.Append(path);
+        filePath = sb.ToString();
         Load();
     }
     public override void Load()

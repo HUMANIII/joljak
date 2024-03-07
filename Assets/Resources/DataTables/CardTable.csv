@@ -1,2 +1,2 @@
-ID,Cost,Name,Attack,HP,Option
-999,999,test,999,999,0
+ID,Cost,Name,Attack,HP,Option,IllustPath
+999,0,testAttack,1,5,0,testPath

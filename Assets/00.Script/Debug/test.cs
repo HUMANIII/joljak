@@ -12,6 +12,15 @@ public class test : MonoBehaviour
         SetCard();
     }
 
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            cardList[0].Attack(cardList[1]);
+        }
+    }
+
     public void SetCard()
     {
         foreach (var card in cardList)

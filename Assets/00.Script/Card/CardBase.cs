@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor.SceneManagement;
 
-public class CardBase : MonoBehaviour
+public class CardBase : MonoBehaviour, IDamagable
 {
     public int CardID;
     [HideInInspector]
     public int CardCost;
     [HideInInspector]
-    public int CardAttack { get { return CardBaseAtk + CardAddAtk; } }
+    public int CardDamage { get { return CardBaseDamage + CardAddDamage; } }
     [HideInInspector]
-    private int CardBaseAtk;
-    private int CardAddAtk;
+    private int CardBaseDamage;
+    private int CardAddDamage;
     private int CardInitHP;
     [HideInInspector]
     public int CardCurHP;
@@ -26,10 +27,13 @@ public class CardBase : MonoBehaviour
     [SerializeField]
     private TextMeshPro cardHp;
 
+    private IAttack attack;
+    private IDie die;
+
     private void Init()
     {
         CardCurHP = CardInitHP;
-        CardAddAtk = 0;
+        CardAddDamage = 0;
     }
 
     public void SetCard(int id)
@@ -37,12 +41,35 @@ public class CardBase : MonoBehaviour
         CardID = id;
         var data = DataTableMgr.GetTable<CardTable>().dic[id];
         CardCost = data.Cost;
-        CardBaseAtk = data.Attack;
+        CardBaseDamage = data.Attack;
         CardInitHP = data.HP;
         CardOption = (CardOption)data.Option;
         Init();
         cardName.text = data.Name;
-        cardAtk.text = CardAttack.ToString();
+        cardAtk.text = CardDamage.ToString();
         cardHp.text = CardCurHP.ToString();
+        SetOption();
+    }
+
+    private void SetOption()
+    {
+        attack ??= gameObject.AddComponent<NormalAttack>();
+        die ??= gameObject.AddComponent<NormalDie>();        
+    }
+
+    public void Attack(IDamagable damagable)
+    {
+        attack.Attack(damagable);
+    }
+
+    public void Damaged(int amount)
+    {
+        CardCurHP -= amount;
+        cardHp.text = CardCurHP.ToString();
+
+        if(CardCurHP <= 0)
+        {
+            die.Die();
+        }
     }
 }
