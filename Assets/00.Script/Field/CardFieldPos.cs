@@ -13,7 +13,7 @@ public class CardFieldPos : ClickableGameObject
         }
         if (cgm.Player.PrevClickedGameObject.layer == gameObject.layer && cgm.Player.PrevClickedType == ClickableType.Card)
         {
-            cgm.Player.SetCardPos(this);
+            cgm.Player.SetCard(this);
             return ClickableType.None;
         }
         return ClickableType.Field;

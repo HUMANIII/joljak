@@ -7,9 +7,8 @@ public class CardGameManager : MonoBehaviour
     public ObjectPool ObjectPool { get; private set; }
     public Player Player { get; private set; }
     public Field Field { get; private set; }
-
-    [SerializeField]
-    private Transform handPos;
+        
+    public Transform handPos;
 
     private void Awake()
     {
@@ -22,7 +21,7 @@ public class CardGameManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            Test1();
+            //Test1();
         }
     }
 

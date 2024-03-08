@@ -10,16 +10,16 @@ public enum PoolType
 }
 public class ObjectPool : MonoBehaviour
 {
-    private readonly Dictionary<PoolType, Queue<GameObject>> effectQueues = new();
+    private readonly Dictionary<PoolType, Stack<GameObject>> effectQueues = new();
     [SerializeField]
     private GameObject[] prefabs;
 
-    private void Start()
+    private void Awake()
     {
         for (int i = 0; i < (int)PoolType.Count; i++)
         {
             Instantiate(new GameObject(((PoolType)i).ToString()), transform);       
-            effectQueues.Add((PoolType)i, new Queue<GameObject>());
+            effectQueues.Add((PoolType)i, new Stack<GameObject>());
         }
     }
 
@@ -27,15 +27,15 @@ public class ObjectPool : MonoBehaviour
     {
         if (!effectQueues.ContainsKey(poolType))
             return null;
+
         if (effectQueues[poolType].Count == 0)
         {
             var obj = Instantiate(prefabs[(int)poolType]);
             obj.transform.parent = gameObject.transform.GetChild((int)poolType);
             return obj;
         }
-        GameObject GO = effectQueues[poolType].Dequeue();
+        GameObject GO = effectQueues[poolType].Pop();
         GO.SetActive(true);
-        effectQueues[poolType].Enqueue(GO);
         return GO;
     }
 
@@ -44,7 +44,7 @@ public class ObjectPool : MonoBehaviour
         GO.SetActive(false);
         if(!GO.TryGetComponent<IPoolable>(out var poolable))
             return false;
-        effectQueues[poolable.PoolType].Enqueue(GO);
+        effectQueues[poolable.PoolType].Push(GO);
         //GO.transform.parent = gameObject.transform.GetChild((int)poolable.PoolType);
         return true;
     }
