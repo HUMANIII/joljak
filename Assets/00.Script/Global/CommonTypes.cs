@@ -7,8 +7,24 @@ public enum CardOption
     None,
     Flying,
     AntiAir,
+    Count,
 }
 
+public enum OwnerType
+{
+    None,
+    Player,
+    Enemy,
+    Count,
+}
+
+public enum CardState
+{
+    None,
+    Hand,
+    Field,
+    Count,
+}
 public struct CardData
 {
     public int ID { get; set; }

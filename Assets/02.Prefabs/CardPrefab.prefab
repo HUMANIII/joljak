@@ -161,7 +161,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1718651667
   m_SortingLayer: 1
-  m_SortingOrder: 10
+  m_SortingOrder: 2
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &6803242069477953338
 MonoBehaviour:
@@ -332,7 +332,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1718651667
   m_SortingLayer: 1
-  m_SortingOrder: 10
+  m_SortingOrder: 2
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &4287332893590719364
 MonoBehaviour:
@@ -503,7 +503,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1718651667
   m_SortingLayer: 1
-  m_SortingOrder: 10
+  m_SortingOrder: 2
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8825402605438800448
 MonoBehaviour:
@@ -669,7 +669,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1718651667
   m_SortingLayer: 1
-  m_SortingOrder: 12
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 463b261890a87564c8653a67f0225b48, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -692,6 +692,7 @@ GameObject:
   - component: {fileID: 7307333749818379133}
   - component: {fileID: 1388198434023119218}
   - component: {fileID: 5373493014454808417}
+  - component: {fileID: 4353725358933660906}
   m_Layer: 0
   m_Name: CardPrefab
   m_TagString: Untagged
@@ -788,9 +789,33 @@ MonoBehaviour:
   CardCost: 0
   CardCurHP: 0
   CardOption: 0
+  Background: {fileID: 1388198434023119218}
+  Illust: {fileID: 4480497572135440579}
+  Option: {fileID: 765587347997381517}
   cardName: {fileID: 8825402605438800448}
   cardAtk: {fileID: 6803242069477953338}
   cardHp: {fileID: 4287332893590719364}
+--- !u!65 &4353725358933660906
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6274419662633307866}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.73, y: 6.77, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7580676781664797350
 GameObject:
   m_ObjectHideFlags: 0
@@ -868,7 +893,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1718651667
   m_SortingLayer: 1
-  m_SortingOrder: 10
+  m_SortingOrder: 2
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &4401263699787990068
 MonoBehaviour:

@@ -8,7 +8,6 @@ public class test : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.test();
         SetCard();
     }
 
@@ -25,7 +24,7 @@ public class test : MonoBehaviour
     {
         foreach (var card in cardList)
         {
-            card.SetCard(999);
+            //card.SetCard(999);
         }
     }
 }

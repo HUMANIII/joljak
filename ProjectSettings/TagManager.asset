@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - ObjectPool
+  - Managers
+  - CardFieldPos
+  - Field
+  - HandPos
   layers:
   - Default
   - TransparentFX
@@ -35,8 +40,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Player
+  - Enemy
   m_SortingLayers:
   - name: Default
     uniqueID: 0

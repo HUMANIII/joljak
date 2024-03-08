@@ -3,40 +3,56 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEditor.SceneManagement;
+using System.Reflection;
 
-public class CardBase : MonoBehaviour, IDamagable
+public class CardBase : ClickableGameObject, IDamagable, IPoolable
 {
     public int CardID;
     [HideInInspector]
     public int CardCost;
     [HideInInspector]
     public int CardDamage { get { return CardBaseDamage + CardAddDamage; } }
+
+    public int StackCount { get; set; }
+
+    private readonly PoolType poolType = PoolType.Card;
+    public PoolType PoolType { get => poolType; }
+
     [HideInInspector]
-    private int CardBaseDamage;
-    private int CardAddDamage;
-    private int CardInitHP;
+    protected int CardBaseDamage;
+    protected int CardAddDamage;
+    protected int CardInitHP;
     [HideInInspector]
     public int CardCurHP;
     [HideInInspector]
     public CardOption CardOption;
 
     [SerializeField]
-    private TextMeshPro cardName;
+    protected SpriteRenderer Background;
     [SerializeField]
-    private TextMeshPro cardAtk;
+    protected SpriteRenderer Illust;
     [SerializeField]
-    private TextMeshPro cardHp;
+    protected SpriteRenderer Option;
+    [SerializeField]
+    protected TextMeshPro cardName;
+    [SerializeField]
+    protected TextMeshPro cardAtk;
+    [SerializeField]
+    protected TextMeshPro cardHp;
 
-    private IAttack attack;
-    private IDie die;
+    protected IAttack attack;
+    protected IDie die;
+    [HideInInspector]
+    public CardState CardState { get; private set; }
 
-    private void Init()
+    protected virtual void Init()
     {
         CardCurHP = CardInitHP;
         CardAddDamage = 0;
+        SetStackOrder(0);
     }
 
-    public void SetCard(int id)
+    public virtual void SetCard(int id)
     {        
         CardID = id;
         var data = DataTableMgr.GetTable<CardTable>().dic[id];
@@ -51,10 +67,21 @@ public class CardBase : MonoBehaviour, IDamagable
         SetOption();
     }
 
-    private void SetOption()
+    protected void SetOption()
     {
         attack ??= gameObject.AddComponent<NormalAttack>();
         die ??= gameObject.AddComponent<NormalDie>();        
+    }
+
+    public void SetStackOrder(int count)
+    {
+        StackCount = count;
+        Background.sortingOrder = StackCount * 10 + 0;
+        Illust.sortingOrder = StackCount * 10 + 1;
+        Option.sortingOrder = StackCount * 10 + 2;
+        cardAtk.sortingOrder = StackCount * 10 + 3;
+        cardHp.sortingOrder = StackCount * 10 + 4;
+        cardName.sortingOrder = StackCount * 10 + 5;
     }
 
     public void Attack(IDamagable damagable)
@@ -71,5 +98,11 @@ public class CardBase : MonoBehaviour, IDamagable
         {
             die.Die();
         }
+    }
+
+    public override ClickableType OnClickSuccessed()
+    {
+        Debug.Log("CardBase Clicked");        
+        return ClickableType.Card;
     }
 }
