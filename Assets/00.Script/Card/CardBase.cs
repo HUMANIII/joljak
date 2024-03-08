@@ -28,6 +28,8 @@ public class CardBase : ClickableGameObject, IDamagable, IPoolable
     public CardOption CardOption;
 
     [SerializeField]
+    protected GameObject BackSide;
+    [SerializeField]
     protected SpriteRenderer Background;
     [SerializeField]
     protected SpriteRenderer Illust;
@@ -44,6 +46,8 @@ public class CardBase : ClickableGameObject, IDamagable, IPoolable
     protected IDie die;
     [HideInInspector]
     public CardState CardState { get; private set; }
+
+    protected bool isOpened = false;
 
     protected virtual void Init()
     {
@@ -104,5 +108,15 @@ public class CardBase : ClickableGameObject, IDamagable, IPoolable
     {
         Debug.Log("CardBase Clicked");        
         return ClickableType.Card;
+    }
+
+    public void SetCardOpen()
+    {
+        BackSide.SetActive(false);
+    }
+
+    public void SetCardClose() 
+    {
+        BackSide.SetActive(true);
     }
 }

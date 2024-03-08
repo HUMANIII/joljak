@@ -3,3 +3,4 @@ ID,Cost,Name,Attack,HP,Option,IllustPath
 2,0,test2,3,1,0,testPath
 3,0,test3,2,2,0,testPath
 4,0,test4,5,7,0,testPath
+999,0,Prey,0,1,0,testPath

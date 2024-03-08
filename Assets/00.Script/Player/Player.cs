@@ -15,7 +15,7 @@ public class Player : MonoBehaviour, IDamagable
 
 
     private readonly LinkedList<CardBase> hand = new();
-    private readonly LinkedList<CardBase> BaseDeck = new();
+    private readonly LinkedList<int> BaseDeck = new();
     private readonly LinkedList<CardBase> CurDeck = new();
 
     private GameObject curClickedGameObject;
@@ -70,11 +70,7 @@ public class Player : MonoBehaviour, IDamagable
 
     public void AddCard(int ID)
     {
-        var card = cgm.ObjectPool.GetObject(PoolType.Card);
-        card.layer = Layers.Player;
-        var cb = card.GetComponent<CardBase>();
-        BaseDeck.AddLast(cb);
-        cb.SetCard(ID);
+        BaseDeck.AddLast(ID);
     }
 
     public void Damaged(int amount)
@@ -85,9 +81,36 @@ public class Player : MonoBehaviour, IDamagable
     public void SetDeck()
     {        
         CurDeck.Clear();
-        foreach (var card in BaseDeck)
+        foreach (var cardID in BaseDeck)
         {
-            CurDeck.AddLast(card);
+            var card = cgm.ObjectPool.GetObject(PoolType.Card);
+            card.transform.SetParent(cgm.deckPos);
+            card.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            var cb = card.GetComponent<CardBase>();
+            cb.SetCard(cardID);
+            CurDeck.AddLast(cb);
+
+        }
+        ShuffleDeck();
+    }
+
+    public void AddToDeck(CardBase card)
+    {
+        card.transform.SetParent(cgm.deckPos);
+        card.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        CurDeck.AddLast(card);
+        ShuffleDeck();
+    }
+
+    public void ShuffleDeck()
+    {
+        var temp = CurDeck.ToList();
+        CurDeck.Clear();
+        while(temp.Count > 0)
+        {
+            var count = Random.Range(0, temp.Count - 1);
+            CurDeck.AddLast(temp[count]);
+            temp.RemoveAt(count);
         }
     }
 
@@ -98,13 +121,27 @@ public class Player : MonoBehaviour, IDamagable
             Debug.Log("Deck is Empty");
             return;
         }
-        var count = Random.Range(0, CurDeck.Count - 1);
-        var card = CurDeck.ElementAt(count);
+        var card = CurDeck.First.Value;
         hand.AddLast(card);
         CurDeck.Remove(card);
+        card.gameObject.layer = Layers.Player;
         card.transform.SetParent(cgm.handPos);
+        card.SetCardOpen();
         SetHandCardPos();
     }
+
+    public void DrawPreyCard()
+    {
+        var card = cgm.ObjectPool.GetObject(PoolType.Card);
+        var cb = card.GetComponent<CardBase>();
+        cb.SetCard(999);
+        cb.SetCardOpen();
+        hand.AddLast(cb);
+        card.layer = Layers.Player;
+        card.transform.SetParent(cgm.handPos);        
+        SetHandCardPos();
+    }
+
     public void SetCard(CardFieldPos cardFieldPos)
     {
         if(PrevClickedType != ClickableType.Card)

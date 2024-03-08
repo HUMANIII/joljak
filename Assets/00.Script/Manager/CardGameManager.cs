@@ -9,6 +9,7 @@ public class CardGameManager : MonoBehaviour
     public Field Field { get; private set; }
         
     public Transform handPos;
+    public Transform deckPos;
 
     private void Awake()
     {

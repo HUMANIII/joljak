@@ -15,7 +15,7 @@ public abstract class ClickableGameObject : MonoBehaviour
 
     protected virtual void Awake()
     {
-        cgm = FindObjectOfType<CardGameManager>();
+        cgm = GameObject.FindWithTag(Tags.Managers).GetComponent<CardGameManager>();
     }
     protected void OnMouseDown()
     {
