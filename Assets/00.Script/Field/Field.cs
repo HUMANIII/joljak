@@ -21,6 +21,26 @@ public class Field : MonoBehaviour
 
     public void SetField(CardBase card, CardFieldPos cardFieldPos)
     {
+
+        card.transform.parent = cardFieldPos.transform;
+        card.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        card.transform.localScale = Vector3.one;
+
         cardFieldPos.SettedCard = card;
+    }
+
+    public void RemoveField(CardBase card)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (field[i][j].SettedCard == card)
+                {
+                    field[i][j].SettedCard = null;
+                    return;
+                }
+            }
+        }
     }
 }

@@ -154,9 +154,6 @@ public class Player : MonoBehaviour, IDamagable
             return;
 
         //SummonObj
-        SummonObj.transform.parent = cardFieldPos.transform;
-        SummonObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-        SummonObj.transform.localScale = Vector3.one;
         //var cb = PrevClickedGameObject.GetComponent<CardBase>();
         SummonObj.SetStackOrder(0);
         if(hand.Contains(SummonObj))

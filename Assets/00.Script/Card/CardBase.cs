@@ -92,6 +92,7 @@ public class CardBase : ClickableGameObject, IDamagable, IPoolable
     public void Attack(IDamagable damagable)
     {
         attack.Attack(damagable);
+        Debug.Log(cardName.text + "Attacked");
     }
 
     public void Damaged(int amount)
@@ -147,6 +148,7 @@ public class CardBase : ClickableGameObject, IDamagable, IPoolable
             foreach (var card in cgm.Player.Prey)
             {
                 cgm.ObjectPool.ReturnObject(card.gameObject);
+                cgm.Field.RemoveField(card);
             }
         }
     }
