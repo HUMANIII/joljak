@@ -21,6 +21,7 @@ public enum OwnerType
 public enum CardState
 {
     None,
+    Deck,
     Hand,
     Field,
     Count,

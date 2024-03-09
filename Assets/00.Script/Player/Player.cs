@@ -13,6 +13,9 @@ public class Player : MonoBehaviour, IDamagable
     [SerializeField] 
     private readonly float handRotGap = 0.1f;
 
+    public readonly LinkedList<CardBase> Prey = new();
+    public CardBase SummonObj;
+    public bool CanSummon { get; set; } = false;
 
     private readonly LinkedList<CardBase> hand = new();
     private readonly LinkedList<int> BaseDeck = new();
@@ -89,7 +92,7 @@ public class Player : MonoBehaviour, IDamagable
             var cb = card.GetComponent<CardBase>();
             cb.SetCard(cardID);
             CurDeck.AddLast(cb);
-
+            cb.CardState = CardState.Deck;
         }
         ShuffleDeck();
     }
@@ -98,6 +101,7 @@ public class Player : MonoBehaviour, IDamagable
     {
         card.transform.SetParent(cgm.deckPos);
         card.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        card.CardState = CardState.Deck;
         CurDeck.AddLast(card);
         ShuffleDeck();
     }
@@ -127,6 +131,7 @@ public class Player : MonoBehaviour, IDamagable
         card.gameObject.layer = Layers.Player;
         card.transform.SetParent(cgm.handPos);
         card.SetCardOpen();
+        card.CardState = CardState.Hand;
         SetHandCardPos();
     }
 
@@ -136,9 +141,10 @@ public class Player : MonoBehaviour, IDamagable
         var cb = card.GetComponent<CardBase>();
         cb.SetCard(999);
         cb.SetCardOpen();
+        cb.CardState = CardState.Hand;
         hand.AddLast(cb);
-        card.layer = Layers.Player;
-        card.transform.SetParent(cgm.handPos);        
+        card.layer = Layers.Player;        
+        card.transform.SetParent(cgm.handPos);                
         SetHandCardPos();
     }
 
@@ -147,16 +153,18 @@ public class Player : MonoBehaviour, IDamagable
         if(PrevClickedType != ClickableType.Card)
             return;
 
-        PrevClickedGameObject.transform.parent = cardFieldPos.transform;
-        PrevClickedGameObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-        PrevClickedGameObject.transform.localScale = Vector3.one;
-        var cb = PrevClickedGameObject.GetComponent<CardBase>();
-        cb.SetStackOrder(0);
-        if(hand.Contains(cb))
+        //SummonObj
+        SummonObj.transform.parent = cardFieldPos.transform;
+        SummonObj.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        SummonObj.transform.localScale = Vector3.one;
+        //var cb = PrevClickedGameObject.GetComponent<CardBase>();
+        SummonObj.SetStackOrder(0);
+        if(hand.Contains(SummonObj))
         {
-            hand.Remove(cb);
+            hand.Remove(SummonObj);
         }
-
+        cgm.Field.SetField(SummonObj, cardFieldPos);
+        SummonObj.CardState = CardState.Field;
         SetHandCardPos();
     }
 

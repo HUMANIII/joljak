@@ -17,27 +17,4 @@ public class CardGameManager : MonoBehaviour
         Player = gameObject.AddComponent<Player>();
         Field = GameObject.FindWithTag(Tags.Field).GetComponent<Field>();
     }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            //Test1();
-        }
-    }
-
-    private int testCounter = -3;
-    private void Test1()
-    {
-        var obj = ObjectPool.GetObject(PoolType.Card);
-        obj.transform.position = Vector3.right * testCounter;
-        testCounter++;
-        var rot = obj.transform.position - Camera.main.transform.position;
-        obj.transform.rotation = Quaternion.LookRotation(rot);
-
-        var cd = obj.GetComponent<CardBase>();
-        cd.SetCard(Random.Range(1, 5));
-        cd.SetStackOrder(testCounter + 3);
-        obj.layer = Layers.Player;
-    }
 }

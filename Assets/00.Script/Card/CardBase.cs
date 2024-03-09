@@ -8,15 +8,14 @@ using System.Reflection;
 public class CardBase : ClickableGameObject, IDamagable, IPoolable
 {
     public int CardID;
-    [HideInInspector]
-    public int CardCost;
-    [HideInInspector]
+    public int CardCost { get; protected set; }
     public int CardDamage { get { return CardBaseDamage + CardAddDamage; } }
 
     public int StackCount { get; set; }
 
     private readonly PoolType poolType = PoolType.Card;
     public PoolType PoolType { get => poolType; }
+    public bool CanUse { get; protected set; } = true;
 
     [HideInInspector]
     protected int CardBaseDamage;
@@ -41,15 +40,16 @@ public class CardBase : ClickableGameObject, IDamagable, IPoolable
     protected TextMeshPro cardAtk;
     [SerializeField]
     protected TextMeshPro cardHp;
+    [SerializeField]
+    protected TextMeshPro cardCost;
 
     protected IAttack attack;
     protected IDie die;
-    [HideInInspector]
-    public CardState CardState { get; private set; }
-
+    public CardState CardState { get; set; }
+    public bool CanSummon { get; set; }
     protected bool isOpened = false;
 
-    protected virtual void Init()
+    protected virtual void ResetCard()
     {
         CardCurHP = CardInitHP;
         CardAddDamage = 0;
@@ -64,10 +64,11 @@ public class CardBase : ClickableGameObject, IDamagable, IPoolable
         CardBaseDamage = data.Attack;
         CardInitHP = data.HP;
         CardOption = (CardOption)data.Option;
-        Init();
+        ResetCard();
         cardName.text = data.Name;
         cardAtk.text = CardDamage.ToString();
         cardHp.text = CardCurHP.ToString();
+        cardCost.text = CardCost.ToString();
         SetOption();
     }
 
@@ -107,6 +108,24 @@ public class CardBase : ClickableGameObject, IDamagable, IPoolable
     public override ClickableType OnClickSuccessed()
     {
         Debug.Log("CardBase Clicked");        
+        switch (CardState)
+        {
+            case CardState.Deck:
+                cgm.Player.DrawCard();
+                break;
+            case CardState.Hand:
+                cgm.Player.SummonObj = this;
+                cgm.Player.Prey.Clear();
+                CheckCanSummon();
+                break;
+            case CardState.Field:
+                if(cgm.Player.SummonObj != null)
+                {
+                    cgm.Player.Prey.AddLast(this);
+                    CheckCanSummon();
+                }
+                break;
+        }
         return ClickableType.Card;
     }
 
@@ -118,5 +137,17 @@ public class CardBase : ClickableGameObject, IDamagable, IPoolable
     public void SetCardClose() 
     {
         BackSide.SetActive(true);
+    }
+
+    private void CheckCanSummon()
+    {
+        cgm.Player.CanSummon = cgm.Player.SummonObj.CardCost <= cgm.Player.Prey.Count;
+        if(cgm.Player.CanSummon)
+        {
+            foreach (var card in cgm.Player.Prey)
+            {
+                cgm.ObjectPool.ReturnObject(card.gameObject);
+            }
+        }
     }
 }

@@ -797,6 +797,7 @@ MonoBehaviour:
   cardName: {fileID: 8825402605438800448}
   cardAtk: {fileID: 6803242069477953338}
   cardHp: {fileID: 4287332893590719364}
+  cardCost: {fileID: 4401263699787990068}
 --- !u!65 &4353725358933660906
 BoxCollider:
   m_ObjectHideFlags: 0
