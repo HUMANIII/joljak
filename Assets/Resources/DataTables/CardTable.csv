@@ -1,0 +1,6 @@
+ID,Cost,Name,Attack,HP,Option,IllustPath
+1,1,test1,1,5,0,testPath
+2,1,test2,3,1,0,testPath
+3,2,test3,2,2,0,testPath
+4,2,test4,5,7,0,testPath
+999,0,Prey,0,1,0,testPath
