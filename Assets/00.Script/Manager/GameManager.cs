@@ -5,5 +5,10 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
+    public static Dictionary<int, StringData> stringTable = new();
 
+    private void Awake()
+    {
+        stringTable = DataTableMgr.GetTable<StringTable>().dic;
+    }
 }
