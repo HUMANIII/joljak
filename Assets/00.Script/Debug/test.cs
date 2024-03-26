@@ -16,7 +16,7 @@ public class test : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.A))
         {
-            cardList[0].Attack(cardList[1]);
+            //cardList[0].Attack(cardList[1]);
         }
     }
 

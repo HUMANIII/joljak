@@ -1,12 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum PoolType
 {
     Card,
     Count,
+    HumanModel,
+    WeaponModel,
 }
 public class ObjectPool : MonoBehaviour
 {
@@ -44,6 +44,7 @@ public class ObjectPool : MonoBehaviour
         GO.SetActive(false);
         if(!GO.TryGetComponent<IPoolable>(out var poolable))
             return false;
+        poolable.OnReturn();
         effectQueues[poolable.PoolType].Push(GO);
         //GO.transform.parent = gameObject.transform.GetChild((int)poolable.PoolType);
         return true;
@@ -68,4 +69,5 @@ public class ObjectPool : MonoBehaviour
 public interface IPoolable
 {
     public PoolType PoolType { get; }
+    public void OnReturn();
 }

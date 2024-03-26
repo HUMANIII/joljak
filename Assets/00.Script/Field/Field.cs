@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 public class Field : MonoBehaviour
 {
-    public CardFieldPos[][] field = new CardFieldPos[3][];
+    public CardFieldPos[][] field = new CardFieldPos[3][];    
 
     private void Awake()
     {
@@ -29,6 +30,11 @@ public class Field : MonoBehaviour
         cardFieldPos.SettedCard = card;
     }
 
+    public void UnsetField(CardFieldPos cardFieldPos)
+    {
+        cardFieldPos.SettedCard = null;
+    }
+
     public void RemoveField(CardBase card)
     {
         for (int i = 0; i < 3; i++)
@@ -42,5 +48,22 @@ public class Field : MonoBehaviour
                 }
             }
         }
+    }
+
+    public bool HasCard(CardBase card, out Vector2Int pos)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (field[i][j].SettedCard == card)
+                {
+                    pos = new Vector2Int(j, i);
+                    return true;
+                }
+            }
+        }
+        pos = Vector2Int.zero;
+        return false;
     }
 }

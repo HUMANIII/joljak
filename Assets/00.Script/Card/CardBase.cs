@@ -24,7 +24,7 @@ public class CardBase : ClickableGameObject, IDamagable, IPoolable
     [HideInInspector]
     public int CardCurHP;
     [HideInInspector]
-    public CardOption CardOption;
+    public CardTags CardTags;
 
     [SerializeField]
     protected GameObject BackSide;
@@ -45,6 +45,7 @@ public class CardBase : ClickableGameObject, IDamagable, IPoolable
 
     protected IAttack attack;
     protected IDie die;
+    protected ISetTarget setTarget;
     public CardState CardState { get; set; }
     public bool CanSummon { get; set; }
     protected bool isOpened = false;
@@ -63,18 +64,41 @@ public class CardBase : ClickableGameObject, IDamagable, IPoolable
         CardCost = data.Cost;
         CardBaseDamage = data.Attack;
         CardInitHP = data.HP;
-        CardOption = (CardOption)data.Option;
+        CardTags = (CardTags)data.Option;
         ResetCard();
         cardName.text = data.Name;
         cardAtk.text = CardDamage.ToString();
         cardHp.text = CardCurHP.ToString();
         cardCost.text = CardCost.ToString();
-        SetOption();
+        SetTags();
     }
 
-    protected void SetOption()
+    public void OnReturn()
     {
-        attack ??= gameObject.AddComponent<NormalAttack>();
+        CardID = default;
+        CardCost = default;
+        CardBaseDamage = default;
+        CardInitHP = default;
+        CardTags = CardTags.None;
+        cardName.text = string.Empty;
+        cardAtk.text = CardDamage.ToString();
+        cardHp.text = CardCurHP.ToString();
+        cardCost.text = CardCost.ToString();
+        attack = default;        
+        setTarget = default;
+        DestroyImmediate(die as MonoBehaviour);
+    }
+
+    protected void SetTags()
+    {
+        switch(CardTags)
+        {
+            case CardTags.Toxic:
+                attack = new ToxicAttack();
+                break;
+        }
+        attack ??= new NormalAttack();
+        setTarget ??= new NormalSetTarget();
         die ??= gameObject.AddComponent<NormalDie>();        
     }
 
@@ -89,15 +113,16 @@ public class CardBase : ClickableGameObject, IDamagable, IPoolable
         cardName.sortingOrder = StackCount * 10 + 5;
     }
 
-    public void Attack(IDamagable damagable)
+    public void Attack()
     {
-        attack.Attack(damagable);
+        var damagable = setTarget.SetTarget(cgm, this);
+        attack.Attack(damagable, this);
         Debug.Log(cardName.text + "Attacked");
     }
 
     public void Damaged(int amount)
     {
-        CardCurHP -= amount;
+        CardCurHP = Mathf.Max(0, CardCurHP - amount);
         cardHp.text = CardCurHP.ToString();
 
         if(CardCurHP <= 0)
@@ -152,4 +177,5 @@ public class CardBase : ClickableGameObject, IDamagable, IPoolable
             }
         }
     }
+
 }

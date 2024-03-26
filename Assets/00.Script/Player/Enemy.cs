@@ -7,6 +7,10 @@ public class Enemy : MonoBehaviour, IDamagable
     private CardGameManager cgm;
     public int DamagedAmount { get; private set; }
 
+    public int ID;
+
+    public int[] WaveID = new int[10];
+
     private void Awake()
     {
         cgm = GetComponent<CardGameManager>();
@@ -17,8 +21,15 @@ public class Enemy : MonoBehaviour, IDamagable
         DamagedAmount += amount;
     }
 
+    public void StartGame(int ID)
+    {
+        this.ID = ID;
+    }
+
     public void SetCard()
     {
+        var data = DataTableMgr.GetTable<EnemyTable>().dic[ID];
+
 
     }
 }

@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
-public enum CardOption
+public enum CardTags
 {
     None,
-    Flying,
-    AntiAir,
+    Toxic,
     Count,
 }
 
@@ -25,6 +25,28 @@ public enum CardState
     Hand,
     Field,
     Count,
+}
+
+public enum CardType
+{
+    None,
+    Hwando,
+    LongSpear,
+    Sechongtong,
+    Moktong,
+    Gukgong,
+    Pyeongon,
+    LongSword,
+    BirdGun,
+    CrossBow,
+    Jangtae,
+    Count,
+}
+
+public struct AttackInfo
+{
+    public int Damage;
+    public CardBase Attacker;
 }
 public struct CardData
 {

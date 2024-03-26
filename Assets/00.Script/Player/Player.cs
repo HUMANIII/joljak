@@ -1,3 +1,4 @@
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ public class Player : MonoBehaviour, IDamagable
     public bool CanSummon { get; set; } = false;
 
     private readonly LinkedList<CardBase> hand = new();
-    private readonly LinkedList<int> BaseDeck = new();
+    private readonly LinkedList<CardBase> BaseDeck = new();
     private readonly LinkedList<CardBase> CurDeck = new();
 
     private GameObject curClickedGameObject;
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour, IDamagable
     }
     public ClickableType CurClickedType { get; private set; }
     public ClickableType PrevClickedType { get; private set; }
+    
 
     private void Awake()
     {
@@ -60,6 +62,7 @@ public class Player : MonoBehaviour, IDamagable
 
     public void SetBaseDeck()
     {
+        //기본 덱 설정
         BaseDeck.Clear();
         AddCard(1);
         AddCard(1);
@@ -73,7 +76,9 @@ public class Player : MonoBehaviour, IDamagable
 
     public void AddCard(int ID)
     {
-        BaseDeck.AddLast(ID);
+        var card = cgm.ObjectPool.GetObject(PoolType.Card).GetComponent<CardBase>();
+        card.SetCard(ID);
+        BaseDeck.AddLast(card);
     }
 
     public void Damaged(int amount)
@@ -84,15 +89,12 @@ public class Player : MonoBehaviour, IDamagable
     public void SetDeck()
     {        
         CurDeck.Clear();
-        foreach (var cardID in BaseDeck)
+        foreach (var card in BaseDeck)
         {
-            var card = cgm.ObjectPool.GetObject(PoolType.Card);
             card.transform.SetParent(cgm.deckPos);
             card.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-            var cb = card.GetComponent<CardBase>();
-            cb.SetCard(cardID);
-            CurDeck.AddLast(cb);
-            cb.CardState = CardState.Deck;
+            CurDeck.AddLast(card);
+            card.CardState = CardState.Deck;
         }
         ShuffleDeck();
     }
@@ -112,7 +114,7 @@ public class Player : MonoBehaviour, IDamagable
         CurDeck.Clear();
         while(temp.Count > 0)
         {
-            var count = Random.Range(0, temp.Count - 1);
+            var count = UnityEngine.Random.Range(0, temp.Count - 1);
             CurDeck.AddLast(temp[count]);
             temp.RemoveAt(count);
         }
